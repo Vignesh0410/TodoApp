@@ -1,5 +1,6 @@
 import dotenv from "dotenv";
-dotenv.config();  // MUST be before all other imports
+import helmet from "helmet";
+dotenv.config(); // MUST be before all other imports
 
 import express, { Application } from "express";
 import routes from "./route";
@@ -17,6 +18,8 @@ const app: Application = express();
 connectDB();
 
 app.use(express.json());
+
+app.use(helmet());
 
 app.use(logger.info);
 
