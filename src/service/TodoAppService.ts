@@ -6,7 +6,6 @@ export class TodoAppService {
 
   addTodo(title: string): string {
     const data: ITodoList = {
-      id: this.count,
       title,
       completed: false,
     };
