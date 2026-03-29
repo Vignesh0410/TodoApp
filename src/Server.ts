@@ -9,6 +9,7 @@ import { AuthMiddleware } from "./Middleware/AuthMiddleware";
 import { RouteLogger } from "./Logger/RouteLogger";
 import connectDB from "./config/Db";
 import userRoute from "./route/UserRoute";
+import { rateLimiter } from "./Middleware/RateLimiter";
 
 const logger = new RouteLogger();
 const errorHandler = new ErrorHandler(logger);
@@ -23,13 +24,17 @@ app.use(helmet());
 
 app.use(logger.info);
 
+app.use("/users", rateLimiter(3, 20));
+
 app.use(userRoute);
 
 // app.use(AuthMiddleware);
 
 app.use(AuthMiddleware);
 
+
 app.use(routes);
+
 
 app.get("/", (req, res) => {
   res.send("Hello World");
